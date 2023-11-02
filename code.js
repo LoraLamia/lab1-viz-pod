@@ -102,7 +102,6 @@ function drawBarChart(data) {
         data,
         v => v.length,
         d => d.pclass,
-        d => d.survived
     );
     //Podaci se grupiraju prema klasi putnika i tome jesu li preživjeli ili ne.
 
@@ -114,7 +113,7 @@ function drawBarChart(data) {
         .style("text-anchor", "middle")
         .text("Passenger class");
     //oznaka za x os
-    const yScale = d3.scaleLinear().domain([0, d3.max(groupedData, d => d[1].reduce((acc, val) => acc + val[1], 0))]).range([height - 50, 50]);
+    const yScale = d3.scaleLinear().domain([0, d3.max(groupedData, d => d[1])]).range([height - 50, 50]);
     //definiranje skale za y os
     svg.append("text")
         .attr("transform", "rotate(-90)")
@@ -136,10 +135,10 @@ function drawBarChart(data) {
         .enter()
         .append("rect")
         .attr("x", d => xScale(d[0]))
-        .attr("y", d => yScale(d[1].filter(item => item[0] === "1")[0][1]))
+        .attr("y", d => yScale(d[1])) 
         .attr("width", xScale.bandwidth())
-        .attr("height", d => height - yScale(d[1].filter(item => item[0] === "1")[0][1]) - 50)
-        .attr("fill", "green")
+        .attr("height", d => height - 50 - yScale(d[1]))  
+        .attr("fill", "gray")
         .attr("class", d => "pclass-" + d[0])
         .on("mouseover", function (event, d) {
             d3.select("#scatterplot")
