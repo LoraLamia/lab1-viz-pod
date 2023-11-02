@@ -1,0 +1,9 @@
+svg {
+    border: 1px solid black;
+    display: block;
+    margin: 20px;
+}
+
+.highlight {
+    fill: yellow; 
+}
